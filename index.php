@@ -4,12 +4,9 @@
     Plugin URI: http://zonneveldcloud.nl
     Description: Display new Daisycon transactions as a dashboard widget in de admin
     Author: Zonneveld Cloud
-    Version: 1.0
+    Version: 1.0.1
     Author URI: http://zonneveldcloud.nl
     */
-?>
-
-<?php
 
 //////////// SETTINGS //////////////////////
 
@@ -65,7 +62,7 @@ function getProgramName($id)
 
 
 
-//create widget with contact information of Zonneveld Cloud
+//create dashboard widget
 function daisycon_add_dashboard_earnings_widget() {
 
 	wp_add_dashboard_widget(
@@ -156,9 +153,7 @@ function daisycon_dashboard_earnings_widget_function() {
 	    echo $response;
 	}
 } 
-?>
 
-<?php
 // create custom plugin settings menu
 add_action('admin_menu', 'create_settings_page');
 
@@ -185,7 +180,6 @@ function daisycon_transaction_settings() {
 <div class="wrap">
 <h2>Daisycon Transactions</h2>
 
-
 <form method="post" action="options.php">
     <?php settings_fields( 'daisycon-transactions' ); ?>
     <?php do_settings_sections( 'daisycon-transactions' ); ?>
@@ -210,9 +204,8 @@ function daisycon_transaction_settings() {
 
 </form>
 </div>
-<?php } ?>
+<?php } 
 
-<?php
 function sortFunction( $a, $b ) {
 	return strtotime($b["date"]) - strtotime($a["date"]);
 }
