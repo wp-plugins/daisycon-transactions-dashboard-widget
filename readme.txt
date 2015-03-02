@@ -4,7 +4,7 @@ Donate link: http://zonneveldcloud.nl/
 Tags: daisycon, affiliate, transactions
 Requires at least: 3.0.1
 Tested up to: 4.1.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: Zonneveld Cloud
 
 See your Daisycon transactions as a widget in the admin dashboard, without logging in to your Daisycon account!
