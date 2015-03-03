@@ -4,7 +4,7 @@ Donate link: http://zonneveldcloud.nl/
 Tags: daisycon, affiliate, transactions
 Requires at least: 3.0.1
 Tested up to: 4.1.1
-Stable tag: 1.0.2
+Stable tag: 1.1
 License: Zonneveld Cloud
 
 See your Daisycon transactions as a widget in the admin dashboard, without logging in to your Daisycon account!
@@ -32,6 +32,9 @@ Installing this plugin is easy.
 
 
 == Changelog ==
+= 1.1 =
+Added message when you did not fill in your account information
+Added message when you did not set read-only access to your account
 
 = 1.0.2 =
 Added instructions on setting page about how to set your account to read-only
