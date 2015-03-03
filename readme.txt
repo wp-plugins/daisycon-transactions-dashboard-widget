@@ -33,6 +33,9 @@ Installing this plugin is easy.
 
 == Changelog ==
 
+= 1.0.2 =
+Added instructions on setting page about how to set your account to read-only
+
 = 1.0.1 =
 Fixed ‘Headers already sent’ bug when you activate the plugin
 
