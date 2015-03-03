@@ -4,7 +4,7 @@
     Plugin URI: http://zonneveldcloud.nl
     Description: Display new Daisycon transactions as a dashboard widget in de admin
     Author: Zonneveld Cloud
-    Version: 1.0.2 
+    Version: 1.1
     Author URI: http://zonneveldcloud.nl
     */
 
@@ -77,80 +77,87 @@ function daisycon_dashboard_earnings_widget_function() {
 	
 	global $publisher_id, $userAndPassword;
 
-	// service
-	$startDate = date("Y-m-d", strtotime( date( "Y-m-d", strtotime( date("Y-m-d") ) ) . "-1 month" ) ); //get all transactions between now and 1 month ago
-	//$startDate = '2014-01-01';
-
-	$url = 'https://services.daisycon.com:443/publishers/'.$publisher_id.'/transactions?page=1&per_page=1000&date_click_start='.$startDate;
+	if(!empty($publisher_id) && !empty($userAndPassword)) {
+		// service
+		$startDate = date("Y-m-d", strtotime( date( "Y-m-d", strtotime( date("Y-m-d") ) ) . "-1 month" ) ); //get all transactions between now and 1 month ago
+		//$startDate = '2014-01-01';
 	
-	// initialize curl resource
-	$ch = curl_init();
-	
-	// set the http request authentication headers
-	$headers = array( 'Authorization: Basic ' . $userAndPassword );
-	
-	// set curl options
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-	
-	// execute curl
-	$response = curl_exec($ch);
-	
-	// check http code
-	$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	
-	// close curl resource
-	curl_close($ch);
-	
-	if ($code == 200)
-	{
-	    $transactions = json_decode($response);
-	    
-	    $daisyconTransactions = Array();
-	    foreach ($transactions as $transaction)
-	    {
-	    	$programName = getProgramName($transaction->program_id);
-	    	
-	    	if(empty($programName))
-	    	{
-		    	$programName = $transaction->parts[0]->publisher_description;
-	    	}
-	    	
-	    	$daisyconTransactions[] = Array(
-	    		'name' => $programName,
-	    		'date' => $transaction->date,
-	    		'commission' => $transaction->parts[0]->commission,
-	    		'status' => $transaction->parts[0]->status
-	    	);	
-	    	
-	    	usort($daisyconTransactions, "sortFunction");
-		}
-	    
-	    
-	    $response = '<table width="100%">';
-		$response.= '<thead style="font-weight:bold;"><tr>';
-	        $response .= '<td width="20px"></td>';
-	        $response .= '<td>Publisher</td>';
-	        $response .= '<td>Commission</td>';
-	        $response .= '<td>Date</td>';
-	        $response .= '</tr></thead>';
-
-	    foreach($daisyconTransactions as $daisyconTransaction)
-	    	
+		$url = 'https://services.daisycon.com:443/publishers/'.$publisher_id.'/transactions?page=1&per_page=1000&date_click_start='.$startDate;
+		
+		// initialize curl resource
+		$ch = curl_init();
+		
+		// set the http request authentication headers
+		$headers = array( 'Authorization: Basic ' . $userAndPassword );
+		
+		// set curl options
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+		
+		// execute curl
+		$response = curl_exec($ch);
+		
+		// check http code
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		
+		// close curl resource
+		curl_close($ch);
+		
+		if ($code == 200)
 		{
-	    
-	    	$response.= '<tr>';
-	        $response .= '<td><img width="15" src="'. plugins_url( 'images/'.$daisyconTransaction['status'].'.png', __FILE__ ) . '" /></td>';
-	        $response .= '<td>'. $daisyconTransaction['name'] . "</td>";
-	        $response .= '<td> &euro; '. number_format($daisyconTransaction['commission'], 2, ',', ' ') . "</td>";
-	        $response .= '<td>'. date("d-m-Y", strtotime($daisyconTransaction['date'])) .'</td>';
-	        $response .= '</tr>';
-	    }
-	    
-	    $response .= '</table>';
-	    
-	    echo $response;
+		    $transactions = json_decode($response);
+		    
+		    $daisyconTransactions = Array();
+		    foreach ($transactions as $transaction)
+		    {
+		    	$programName = getProgramName($transaction->program_id);
+		    	
+		    	if(empty($programName))
+		    	{
+			    	$programName = $transaction->parts[0]->publisher_description;
+		    	}
+		    	
+		    	$daisyconTransactions[] = Array(
+		    		'name' => $programName,
+		    		'date' => $transaction->date,
+		    		'commission' => $transaction->parts[0]->commission,
+		    		'status' => $transaction->parts[0]->status
+		    	);	
+		    	
+		    	usort($daisyconTransactions, "sortFunction");
+			}
+		    
+		    
+		    $response = '<table width="100%">';
+			$response.= '<thead style="font-weight:bold;"><tr>';
+		        $response .= '<td width="20px"></td>';
+		        $response .= '<td>Publisher</td>';
+		        $response .= '<td>Commission</td>';
+		        $response .= '<td>Date</td>';
+		        $response .= '</tr></thead>';
+	
+		    foreach($daisyconTransactions as $daisyconTransaction)
+		    	
+			{
+		    
+		    	$response.= '<tr>';
+		        $response .= '<td><img width="15" src="'. plugins_url( 'images/'.$daisyconTransaction['status'].'.png', __FILE__ ) . '" /></td>';
+		        $response .= '<td>'. $daisyconTransaction['name'] . "</td>";
+		        $response .= '<td> &euro; '. number_format($daisyconTransaction['commission'], 2, ',', ' ') . "</td>";
+		        $response .= '<td>'. date("d-m-Y", strtotime($daisyconTransaction['date'])) .'</td>';
+		        $response .= '</tr>';
+		    }
+		    
+		    $response .= '</table>';
+		    
+		    echo $response;
+		}
+		else if($code = 401 || $code = 403) {
+			echo 'Not able to get access to your Daisycon account. Check if you fill in the correct account information or try to set your account to "Read-only" <a href="https://publishers.daisycon.com/en/account/users/overview/updateLang/true" target="_blank">here</a>.';
+		}
+	} else {
+		echo 'Please fill in your account information in the settings';
 	}
 } 
 
