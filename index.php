@@ -203,6 +203,10 @@ function daisycon_transaction_settings() {
     <?php submit_button(); ?>
 
 </form>
+
+Important: Set your account to "Read-only" <a href='https://publishers.daisycon.com/en/account/users/overview/updateLang/true' target="_blank">here</a>.
+
+<b>Plugin developed by <a href="http://zonneveldcloud.nl" target="_blank">Zonneveld Cloud</a></b>
 </div>
 <?php } 
 

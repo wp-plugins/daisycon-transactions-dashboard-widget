@@ -4,7 +4,7 @@ Donate link: http://zonneveldcloud.nl/
 Tags: daisycon, affiliate, transactions
 Requires at least: 3.0.1
 Tested up to: 4.1.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: Zonneveld Cloud
 
 See your Daisycon transactions as a widget in the admin dashboard, without logging in to your Daisycon account!
@@ -12,6 +12,8 @@ See your Daisycon transactions as a widget in the admin dashboard, without loggi
 == Description ==
 
 With this plugin, you can see your most recent Daisycon transactions in the Wordpress admin dashboard. You can see all the transactions of the last month. 
+
+Disclaimer: This tool is developed by Zonneveld Cloud and not by Daisycon.
 
 == Installation ==
 
