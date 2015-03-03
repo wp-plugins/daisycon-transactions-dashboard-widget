@@ -4,7 +4,7 @@
     Plugin URI: http://zonneveldcloud.nl
     Description: Display new Daisycon transactions as a dashboard widget in de admin
     Author: Zonneveld Cloud
-    Version: 1.0.1
+    Version: 1.0.2 
     Author URI: http://zonneveldcloud.nl
     */
 
